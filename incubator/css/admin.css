@@ -6,3 +6,12 @@
     margin-top: 3rem;
     margin-bottom: 3rem;
 }
+
+.elem-centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.width-limit-500 {
+    max-width: 500px;
+}

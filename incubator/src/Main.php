@@ -11,6 +11,7 @@ final class Main
     private $url;
     private $wpdb;
     private $admin_page;
+    private $admin_notice;
 
     public function __construct(string $dir, string $url)
     {
@@ -115,6 +116,11 @@ final class Main
 
     }
 
+    /**
+     * Add CSS and JS files to admin pages.
+     * 
+     * @return $this
+     */
     private function adminPageResources() : Main
     {
 
@@ -126,6 +132,53 @@ final class Main
                 [],
                 '0.0.1'
             );
+
+            wp_enqueue_script(
+                'foldername-admin',
+                $this->url.'js/admin.js',
+                [],
+                '0.0.1'
+            );
+
+        });
+
+        return $this;
+
+    }
+
+    /**
+     * Set new admin page notice.
+     * 
+     * @param string $type
+     * Notice type.
+     * Might be 'success', 'warning' or 'error'/'danger'.
+     * 
+     * @param string $text
+     * Notice text.
+     * 
+     * @return $this
+     */
+    private function adminPageNotice(string $type, string $text) : Main
+    {
+
+        if ($type === 'danger') $type = 'error';
+
+        $this->admin_notice = [
+            'type' => $type,
+            'text' => $text
+        ];
+
+        add_action('admin_notices', function($prev_notices) {
+
+            ob_start();
+
+?>
+<div class="notice notice-<?= htmlspecialchars($this->admin_notice['type']) ?> is-dismissible width-limit-500 elem-centered">
+    <p class="text-centered"><?= $this->admin_notice['text'] ?></p>
+</div>
+<?php
+
+            echo $prev_notices.ob_get_clean();
 
         });
 
