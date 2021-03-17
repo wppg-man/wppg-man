@@ -43,7 +43,7 @@ final class Main
      * 
      * @return $this
      */
-    private function adminPageAdd() : Main
+    private function adminPageAdd() : self
     {
 
         add_action('admin_menu', function() {
@@ -68,7 +68,7 @@ final class Main
      * 
      * @return $this
      */
-    private function adminPageTreat() : Main
+    private function adminPageTreat() : self
     {
 
         add_action('plugins_loaded', function() {
@@ -92,7 +92,7 @@ final class Main
      * 
      * @return $this
      */
-    private function adminPageData() : Main
+    private function adminPageData() : self
     {
 
         /**
@@ -121,7 +121,7 @@ final class Main
      * 
      * @return $this
      */
-    private function adminPageResources() : Main
+    private function adminPageResources() : self
     {
 
         add_action('admin_enqueue_scripts', function() {
@@ -158,7 +158,7 @@ final class Main
      * 
      * @return $this
      */
-    private function adminPageNotice(string $type, string $text) : Main
+    private function adminPageNotice(string $type, string $text) : self
     {
 
         if ($type === 'danger') $type = 'error';
