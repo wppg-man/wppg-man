@@ -1,0 +1,20 @@
+<?php
+/**
+ * WPPG-Man
+ */
+use WPPGMan\Main;
+use WPPGMan\Exceptions\MainException;
+
+require_once __DIR__.'/autoload.php';
+
+try {
+
+    new Main($argv);
+
+} catch (MainException $e) {
+
+    echo PHP_EOL.
+        $e->getCode().', '.$e->getMessage().
+        PHP_EOL;
+
+}
