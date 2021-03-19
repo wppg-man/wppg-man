@@ -38,6 +38,10 @@ class ExceptionsList
         '-13' => [
             'message' => 'Something is wrong with settings.',
             'code' => -13
+        ],
+        '-14' => [
+            'message' => 'Invalid setting value.',
+            'code' => -14
         ]
     ];
 

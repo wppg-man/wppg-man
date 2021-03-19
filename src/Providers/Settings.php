@@ -46,6 +46,53 @@ class Settings
     }
 
     /**
+     * Set the setting.
+     * 
+     * @param string $key
+     * if setting already exist, it will be rewrite.
+     * 
+     * @param string $value
+     * Value cannot be resourse.
+     * 
+     * @return $this
+     * 
+     * @throws WPPGMan\Exceptions\SettingsException
+     */
+    public function settingSet(string $key, $value) : self
+    {
+
+        if (is_resource($value)) throw new SettingsException(
+            ExceptionsList::SETTINGS['-14']['message'],
+            ExceptionsList::SETTINGS['14']['code']
+        );
+
+        if ($this->settings === NULL) $this->settingsInternalLoad();
+        
+        $this->settings[$key] = $value;
+
+        return $this;
+
+    }
+
+    /**
+     * Get the value of the setting.
+     * 
+     * @param string $key
+     * 
+     * @return mixed
+     * If setting is not exist, th method will return NULL.
+     */
+    public function settingGet(string $key)
+    {
+
+        if ($this->settings === NULL) $this->settingsInternalLoad();
+
+        if (isset($this->settings[$key])) return $this->settings[$key];
+        else return NULL;
+
+    }
+
+    /**
      * Load and output settings.
      * 
      * @return array

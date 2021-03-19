@@ -1,10 +1,12 @@
 <?php
 /**
- * WPPG-Man 0.1.5
+ * WPPG-Man 0.1.6
  * License: GNU GPL v3
  */
 namespace WPPGMan;
 
+use WPPGMan\Providers\Settings;
+use WPPGMan\Exceptions\SettingsException;
 use WPPGMan\Exceptions\MainException;
 use WPPGMan\Exceptions\ExceptionsList;
 
