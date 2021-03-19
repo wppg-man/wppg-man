@@ -1,6 +1,6 @@
 <?php
 /**
- * WPPG-Man 0.1.2
+ * WPPG-Man 0.1.3
  * License: GNU GPL v3
  */
 namespace WPPGMan;

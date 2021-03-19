@@ -10,6 +10,7 @@ use WPPGMan\Exceptions\ExceptionsList;
 class Settings
 {
 
+    protected $file = 'settings.json';
     protected $path;
 
     public function __construct(string $path)
@@ -38,8 +39,30 @@ class Settings
 
         }
 
+        if (substr($this->path, -1) !== '/' ||
+            substr($this->path, -1) !== '\\') $this->path .= '/';
+
     }
 
+    /**
+     * Check settings file availability.
+     * 
+     * @return bool
+     * True if file is exist and able to rewrite, or can be create.
+     * Otherwise the method will return false.
+     */
+    protected function settingsFileCheck() : bool
+    {
 
+        $test_content = file_exists($this->path.$this->file) ?
+            file_get_contents($this->path.$this->file) : json_encode([]);
+
+        if (file_put_contents(
+            $this->path.$this->file,
+            $test_content
+        ) === false) return false;
+        else return true;
+
+    }
 
 }

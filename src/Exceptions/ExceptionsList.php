@@ -19,6 +19,10 @@ class ExceptionsList
         '-3' => [
             'message' => 'Directory creation failure.',
             'code' => -3
+        ],
+        '-4' => [
+            'message' => 'JSON decoding failure.',
+            'code' => -4
         ]
     ];
 
