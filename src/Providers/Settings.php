@@ -11,6 +11,7 @@ class Settings
 {
 
     protected $file = 'settings.json';
+    protected $settings = NULL;
     protected $path;
 
     public function __construct(string $path)
@@ -45,6 +46,55 @@ class Settings
     }
 
     /**
+     * Load and output settings.
+     * 
+     * @return array
+     * 
+     * @throws WPPGMan\Exceptions\SettingsException
+     */
+    public function settingsLoad() : array
+    {
+
+        if ($this->settings === NULL) $this->settingsInternalLoad();
+
+        return $this->settings;
+
+    }
+
+    /**
+     * Load settings and store in into the $settings property.
+     * 
+     * @return $this
+     * 
+     * @throws WPPGMan\Exceptions\SettingsException
+     */
+    protected function settingsInternalLoad() : self
+    {
+
+        if ($this->settings === NULL) {
+
+            if ($this->settingsFileCheck()) $this->settings = json_decode(
+                file_get_contents($this->path.$this->file),
+                true
+            );
+            else throw new SettingsException(
+                ExceptionsList::SETTINGS['-11']['message'],
+                ExceptionsList::SETTINGS['-11']['code']
+            );
+
+            if ($this->settings === NULL) throw new SettingsException(
+                ExceptionsList::COMMON['-4']['message'].
+                    ' ('.$this->path.$this->file.')',
+                ExceptionsList::COMMON['-4']['code']
+            );
+
+        }
+
+        return $this;
+
+    }
+
+    /**
      * Check settings file availability.
      * 
      * @return bool
@@ -57,11 +107,10 @@ class Settings
         $test_content = file_exists($this->path.$this->file) ?
             file_get_contents($this->path.$this->file) : json_encode([]);
 
-        if (file_put_contents(
-            $this->path.$this->file,
-            $test_content
-        ) === false) return false;
-        else return true;
+        $result = file_put_contents($this->path.$this->file, $test_content);
+        $result = $result === false ? false : true;
+
+        return $result;
 
     }
 

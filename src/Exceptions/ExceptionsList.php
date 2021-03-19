@@ -26,4 +26,11 @@ class ExceptionsList
         ]
     ];
 
+    const SETTINGS = [
+        '-11' => [
+            'message' => 'Settings file is not available.',
+            'code' => -11
+        ]
+    ];
+
 }
