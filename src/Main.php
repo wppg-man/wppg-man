@@ -1,11 +1,12 @@
 <?php
 /**
- * WPPG-Man 0.1.1 by Chirontex (chirontex@yandex.com)
+ * WPPG-Man 0.1.2
  * License: GNU GPL v3
  */
 namespace WPPGMan;
 
 use WPPGMan\Exceptions\MainException;
+use WPPGMan\Exceptions\ExceptionsList;
 
 final class Main
 {
@@ -14,8 +15,8 @@ final class Main
     {
 
         if (empty($incoming)) throw new MainException(
-            'Incorrect object creation. ('.__CLASS__.')',
-            -1
+            ExceptionsList::COMMON['-1']['message'].' ('.__CLASS__.')',
+            ExceptionsList::COMMON['-1']['code']
         );
 
         $command = empty($incoming[1]) ?
