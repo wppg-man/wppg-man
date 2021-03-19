@@ -62,6 +62,46 @@ class Settings
     }
 
     /**
+     * Save settings to file.
+     * 
+     * @param bool $exception_null_settings
+     * If true, the method will throw an exception if $this->settings === null.
+     * 
+     * @return $this
+     * 
+     * @throws WPPGMan\Exceptions\SettingsException
+     */
+    public function settingsSave(bool $exception_null_settings = true) : self
+    {
+
+        if ($this->settings === NULL) {
+
+            if ($exception_null_settings) throw new SettingsException(
+                ExceptionsList::SETTINGS['-12']['message'],
+                ExceptionsList::SETTINGS['-12']['code']
+            );
+
+        } elseif (is_array($this->settings)) {
+
+            if ($this->settingsFileCheck()) file_put_contents(
+                $this->path.$this->file,
+                json_encode($this->settings, JSON_UNESCAPED_UNICODE)
+            );
+            else throw new SettingsException(
+                ExceptionsList::SETTINGS['-11']['message'],
+                ExceptionsList::SETTINGS['-11']['code']
+            );
+
+        } else throw new SettingsException(
+            ExceptionsList::SETTINGS['-13']['message'],
+            ExceptionsList::SETTINGS['-13']['code']
+        );
+
+        return $this;
+
+    }
+
+    /**
      * Load settings and store in into the $settings property.
      * 
      * @return $this

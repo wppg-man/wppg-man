@@ -30,6 +30,14 @@ class ExceptionsList
         '-11' => [
             'message' => 'Settings file is not available.',
             'code' => -11
+        ],
+        '-12' => [
+            'message' => 'Incorrect settings saving.',
+            'code' => -12
+        ],
+        '-13' => [
+            'message' => 'Something is wrong with settings.',
+            'code' => -13
         ]
     ];
 
