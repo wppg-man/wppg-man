@@ -4,7 +4,7 @@
  * Plugin URI: plugin-uri
  * Description: plugin-desc
  * Version: 0.0.1
- * Author: pulgin-author
+ * Author: plugin-author
  * Author URI: plugin-author-uri
  */
 use PluginMainNamespace\Main;

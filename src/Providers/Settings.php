@@ -11,7 +11,7 @@ class Settings
 {
 
     protected $file = 'settings.json';
-    protected $settings = NULL;
+    protected $settings = [];
     protected $path;
 
     public function __construct(string $path)
@@ -58,15 +58,10 @@ class Settings
      * 
      * @throws WPPGMan\Exceptions\SettingsException
      */
-    public function settingSet(string $key, $value) : self
+    public function settingSet(string $key, string $value) : self
     {
 
-        if (is_resource($value)) throw new SettingsException(
-            ExceptionsList::SETTINGS['-14']['message'],
-            ExceptionsList::SETTINGS['14']['code']
-        );
-
-        if ($this->settings === NULL) $this->settingsInternalLoad();
+        if ($this->settings === []) $this->settingsInternalLoad();
         
         $this->settings[$key] = $value;
 
@@ -80,15 +75,15 @@ class Settings
      * @param string $key
      * 
      * @return mixed
-     * If setting is not exist, th method will return NULL.
+     * If setting is not exist, the method will return an empty string.
      */
-    public function settingGet(string $key)
+    public function settingGet(string $key) : string
     {
 
-        if ($this->settings === NULL) $this->settingsInternalLoad();
+        if (empty($this->settings)) $this->settingsInternalLoad();
 
         if (isset($this->settings[$key])) return $this->settings[$key];
-        else return NULL;
+        else return '';
 
     }
 
@@ -102,7 +97,7 @@ class Settings
     public function settingsLoad() : array
     {
 
-        if ($this->settings === NULL) $this->settingsInternalLoad();
+        if (empty($this->settings)) $this->settingsInternalLoad();
 
         return $this->settings;
 
@@ -121,14 +116,14 @@ class Settings
     public function settingsSave(bool $exception_null_settings = true) : self
     {
 
-        if ($this->settings === NULL) {
+        if (empty($this->settings)) {
 
             if ($exception_null_settings) throw new SettingsException(
                 ExceptionsList::SETTINGS['-12']['message'],
                 ExceptionsList::SETTINGS['-12']['code']
             );
 
-        } elseif (is_array($this->settings)) {
+        } else {
 
             if ($this->settingsFileCheck()) file_put_contents(
                 $this->path.$this->file,
@@ -139,10 +134,7 @@ class Settings
                 ExceptionsList::SETTINGS['-11']['code']
             );
 
-        } else throw new SettingsException(
-            ExceptionsList::SETTINGS['-13']['message'],
-            ExceptionsList::SETTINGS['-13']['code']
-        );
+        }
 
         return $this;
 
@@ -158,7 +150,7 @@ class Settings
     protected function settingsInternalLoad() : self
     {
 
-        if ($this->settings === NULL) {
+        if (empty($this->settings)) {
 
             if ($this->settingsFileCheck()) $this->settings = json_decode(
                 file_get_contents($this->path.$this->file),
@@ -167,12 +159,6 @@ class Settings
             else throw new SettingsException(
                 ExceptionsList::SETTINGS['-11']['message'],
                 ExceptionsList::SETTINGS['-11']['code']
-            );
-
-            if ($this->settings === NULL) throw new SettingsException(
-                ExceptionsList::COMMON['-4']['message'].
-                    ' ('.$this->path.$this->file.')',
-                ExceptionsList::COMMON['-4']['code']
             );
 
         }

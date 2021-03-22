@@ -1,6 +1,6 @@
 <?php
 /**
- * WPPG-Man 0.1.6
+ * WPPG-Man 0.1.7
  * License: GNU GPL v3
  */
 namespace WPPGMan;
@@ -22,9 +22,22 @@ final class Main
         );
 
         $command = empty($incoming[1]) ?
-            'help' : $incoming[1];
+            'help' : (string)$incoming[1];
 
         switch ($command) {
+
+            case 'set:foldername':
+            case 'set:pulgin-name':
+            case 'set:plugin-uri':
+            case 'set:plugin-desc':
+            case 'set:plugin-author':
+            case 'set:plugin-author-uri':
+            case 'set:PluginMainNamespace':
+                $this->settingsHandle(
+                    $command,
+                    empty($incoming[2]) ? 'help' : (string)$incoming[2]
+                );
+                break;
 
             case 'help':
                 $this->help();
@@ -40,7 +53,14 @@ final class Main
 
     }
 
-    public function help() : self
+    private function settingsHandle(string $command, string $value) : self
+    {
+
+        return $this;
+
+    }
+
+    private function help() : self
     {
 
         return $this;
