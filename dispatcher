@@ -9,7 +9,7 @@ require_once __DIR__.'/autoload.php';
 
 try {
 
-    new Main($argv);
+    new Main(__DIR__, $argv);
 
 } catch (MainException $e) {
 

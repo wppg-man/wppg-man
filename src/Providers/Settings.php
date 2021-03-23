@@ -10,11 +10,11 @@ use WPPGMan\Exceptions\ExceptionsList;
 class Settings
 {
 
-    protected $file = 'settings.json';
+    protected $file;
     protected $settings = [];
     protected $path;
 
-    public function __construct(string $path)
+    public function __construct(string $path, string $file = 'settings')
     {
         
         if (empty($path)) $this->path = __DIR__;
@@ -43,6 +43,12 @@ class Settings
         if (substr($this->path, -1) !== '/' ||
             substr($this->path, -1) !== '\\') $this->path .= '/';
 
+        if (empty($file)) $file = 'settings.json';
+
+        if (substr($file, -5) !== '.json') $file .= '.json';
+
+        $this->file = $file;
+
     }
 
     /**
@@ -52,7 +58,6 @@ class Settings
      * if setting already exist, it will be rewrite.
      * 
      * @param string $value
-     * Value cannot be resourse.
      * 
      * @return $this
      * 
